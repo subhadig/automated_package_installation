@@ -1,0 +1,39 @@
+#!/usr/bin/expect -f
+
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+			  ;# script wasn't run conservatively originally
+if {$force_conservative} {
+	set send_slow {1 .1}
+	proc send {ignore arg} {
+		sleep .1
+		exp_send -s -- $arg
+	}
+}
+
+# set the input parameters
+set mysql_root_password [lindex $argv 0]
+
+
+set timeout -1
+spawn $env(SHELL)
+match_max 100000
+expect -exact "# "
+send -- "/usr/bin/mysql_secure_installation"
+expect -exact "/usr/bin/mysql_secure_installation"
+send -- "\r"
+expect -exact "Enter password for user root: "
+send -- "$mysql_root_password\r"
+expect -exact "Press y|Y for Yes, any other key for No: "
+send -- "y\r"
+expect -exact "Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: "
+send -- "2\r"
+expect -exact "Change the password for root ? ((Press y|Y for Yes, any other key for No) : "
+send -- "\r"
+expect -exact "Remove anonymous users? (Press y|Y for Yes, any other key for No) : "
+send -- "y\r"
+expect -exact "Disallow root login remotely? (Press y|Y for Yes, any other key for No) : "
+send -- "y\r"
+expect -exact "Remove test database and access to it? (Press y|Y for Yes, any other key for No) : "
+send -- "y\r"
+expect -exact "Reload privilege tables now? (Press y|Y for Yes, any other key for No) : "
+send -- "y\r"
