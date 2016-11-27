@@ -12,7 +12,7 @@ It also does the below jobs:
 	2. enables ufw					
 	3. allows ssh and selected port for http	
 							
-**Usage:** sudo ./automate.sh <mysql_root_password>
+**Usage:** sudo ./automate.sh &lt;mysql_root_password&gt;
 
 **Compatibility:** This script is tested and is known to work with a fresh installation of Ubuntu 16.04.1. However it should work with other versions of Ubuntu and Ubuntu based distros with little or no change.
 
